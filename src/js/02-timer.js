@@ -23,10 +23,16 @@ const options = {
       return window.alert('Please choose a date in the future');
     }
     startBtn = start.removeAttribute('disabled');
+    const delta = selectedDates[0] - options.defaultDate;
+
+    start.addEventListener('click', () => setInterval(convertMs(delta))), 1000;
+
+    refs.days.textContent = convertMs(delta).days;
+    refs.hours.textContent = convertMs(delta).hours;
+    refs.minutes.textContent = convertMs(delta).minutes;
+    refs.seconds.textContent = convertMs(delta).seconds;
   },
 };
-
-console.log(options.defaultDate);
 
 function convertMs(ms) {
   const second = 1000;
@@ -42,5 +48,4 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-// start.addEventListener('click', () => (timerId = setInterval(convertMs)), 1000);
 flatpickr('input#datetime-picker', options);
