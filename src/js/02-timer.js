@@ -1,5 +1,6 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import Notiflix from 'notiflix';
 
 const refs = {
   days: document.querySelector('[data-days]'),
@@ -10,6 +11,7 @@ const refs = {
 };
 
 refs.start.disabled = true;
+let interval = null;
 
 const options = {
   enableTime: true,
@@ -17,21 +19,28 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
-    if (selectedDates[0] < options.defaultDate) {
-      return window.alert('Please choose a date in the future');
+    if (selectedDates[0].getTime() < new Date().getTime()) {
+      return Notiflix.Notify.warning('Please choose a date in the future');
     }
     refs.start.disabled = false;
   },
 };
 
-// let delta = selectedDates[0] - options.defaultDate;
-// refs.days.textContent = convertMs(delta).days;
-// refs.hours.textContent = convertMs(delta).hours;
-// refs.minutes.textContent = convertMs(delta).minutes;
-// refs.seconds.textContent = convertMs(delta).seconds;
+const flatpickrOption = flatpickr('input#datetime-picker', options);
 
-// refs.start.addEventListener('click', () => setInterval(convertMs(delta), 1000));
+const onHandlerClick = () => {
+  interval = setInterval(() => {
+    const newDate = new Date();
+    const selectedDate = flatpickrOption.selectedDates[0];
+    const deltaTime = selectedDate.getTime() - newDate.getTime();
+    if (deltaTime < 0) {
+      return createInterval(interval);
+    }
+    const convertedDate = convertMs(deltaTime);
+    addedDate(convertedDate);
+    refs.start.disabled = true;
+  }, 1000);
+};
 
 function convertMs(ms) {
   const second = 1000;
@@ -47,4 +56,11 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-flatpickr('input#datetime-picker', options);
+function addedDate(e) {
+  refs.days.textContent = e.days;
+  refs.hours.textContent = e.hours;
+  refs.minutes.textContent = e.minutes;
+  refs.seconds.textContent = e.seconds;
+}
+
+refs.start.addEventListener('click', onHandlerClick);
