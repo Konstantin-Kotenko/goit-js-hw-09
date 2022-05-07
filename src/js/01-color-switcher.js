@@ -9,18 +9,18 @@ refs = {
 };
 
 let intervalColor;
-refs.stop.setAttribute('disabled', 'disabled');
+refs.stop.disabled = true;
 
 const onClickHandlerStart = () => {
   intervalColor = setInterval(() => (refs.body.style.backgroundColor = getRandomHexColor()), 1000);
-  refs.start.setAttribute('disabled', 'disabled');
-  refs.stop.removeAttribute('disabled');
+  refs.start.disabled = true;
+  refs.stop.disabled = false;
 };
 
 const onClickHandlerStop = () => {
   clearInterval(intervalColor);
-  refs.start.removeAttribute('disabled');
-  refs.stop.setAttribute('disabled', 'disabled');
+  refs.start.disabled = false;
+  refs.stop.disabled = true;
 };
 
 refs.start.addEventListener('click', onClickHandlerStart);
