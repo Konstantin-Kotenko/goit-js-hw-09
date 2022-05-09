@@ -24,9 +24,8 @@ const onFormSubmit = e => {
         .then(message => Notiflix.Notify.success(message))
         .catch(message => Notiflix.Notify.failure(message));
     }, Number(delay) + i * Number(step));
-
-    e.currentTarget.reset();
   }
+  e.currentTarget.reset();
 };
 
 form.addEventListener('submit', onFormSubmit);
