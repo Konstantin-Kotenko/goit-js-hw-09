@@ -10,7 +10,6 @@ const refs = {
   start: document.querySelector('button'),
 };
 
-refs.start.disabled = true;
 let interval = null;
 
 const options = {
@@ -22,7 +21,9 @@ const options = {
     if (selectedDates[0].getTime() < new Date().getTime()) {
       return Notiflix.Notify.failure('Please choose a date in the future');
     }
-    refs.start.disabled = false;
+    if (interval === null) {
+      return (refs.start.disabled = false);
+    }
   },
 };
 

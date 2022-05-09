@@ -1,7 +1,6 @@
 import Notiflix from 'notiflix';
 
 const form = document.querySelector('form');
-let formData = {};
 
 function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
@@ -15,19 +14,19 @@ function createPromise(position, delay) {
 
 const onFormSubmit = e => {
   e.preventDefault();
-  let time = Number(formData.delay);
-  for (let i = 0; i < formData.amount; i += 1) {
+  const delay = e.currentTarget.elements.delay.value;
+  const step = e.currentTarget.elements.step.value;
+  const amount = e.currentTarget.elements.amount.value;
+
+  for (let i = 0; i < Number(amount); i += 1) {
     setTimeout(() => {
-      createPromise(i + 1, time + i * Number(formData.step))
+      createPromise(i + 1, Number(delay) + i * Number(step))
         .then(message => Notiflix.Notify.success(message))
         .catch(message => Notiflix.Notify.failure(message));
-    }, time + i * Number(formData.step));
+    }, Number(delay) + i * Number(step));
+
+    e.currentTarget.reset();
   }
 };
 
-const onformInput = e => {
-  formData[e.target.name] = e.target.value;
-};
-
 form.addEventListener('submit', onFormSubmit);
-form.addEventListener('input', onformInput);

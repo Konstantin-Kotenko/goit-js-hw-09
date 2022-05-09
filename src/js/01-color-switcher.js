@@ -9,7 +9,6 @@ refs = {
 };
 
 let intervalColor;
-refs.stop.disabled = true;
 
 const onHandlerClickStart = () => {
   intervalColor = setInterval(() => (refs.body.style.backgroundColor = getRandomHexColor()), 1000);
