@@ -11,17 +11,17 @@ refs = {
 let intervalColor;
 refs.stop.disabled = true;
 
-const onClickHandlerStart = () => {
+const onHandlerClickStart = () => {
   intervalColor = setInterval(() => (refs.body.style.backgroundColor = getRandomHexColor()), 1000);
   refs.start.disabled = true;
   refs.stop.disabled = false;
 };
 
-const onClickHandlerStop = () => {
+const onHandlerClickStop = () => {
   clearInterval(intervalColor);
   refs.start.disabled = false;
   refs.stop.disabled = true;
 };
 
-refs.start.addEventListener('click', onClickHandlerStart);
-refs.stop.addEventListener('click', onClickHandlerStop);
+refs.start.addEventListener('click', onHandlerClickStart);
+refs.stop.addEventListener('click', onHandlerClickStop);
