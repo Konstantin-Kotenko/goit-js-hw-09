@@ -56,11 +56,15 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-function addedDate(e) {
-  refs.days.textContent = e.days;
-  refs.hours.textContent = e.hours;
-  refs.minutes.textContent = e.minutes;
-  refs.seconds.textContent = e.seconds;
-}
+const addLeadingZero = value => {
+  return String(value).padStart(2, '0');
+};
+
+const addedDate = e => {
+  refs.days.textContent = addLeadingZero(e.days);
+  refs.hours.textContent = addLeadingZero(e.hours);
+  refs.minutes.textContent = addLeadingZero(e.minutes);
+  refs.seconds.textContent = addLeadingZero(e.seconds);
+};
 
 refs.start.addEventListener('click', onHandlerClick);
